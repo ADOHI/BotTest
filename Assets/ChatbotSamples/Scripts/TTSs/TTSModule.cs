@@ -1,23 +1,24 @@
 using com.cyborgAssets.inspectorButtonPro;
 using OpenAI;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TTSModule : MonoBehaviour
 {
-    private AudioSource audioSource;
 
     private OpenAIApi openAIApi;
 
     public GPTData gptData;
+    public AudioSource audioSource;
 
     public UnityEvent onPlayingStart;
     public UnityEvent onPlayingFinished;
     private void Start()
     {
         openAIApi = new OpenAIApi(apiKey: gptData.apiKey);
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
 
         
     }
@@ -39,7 +40,11 @@ public class TTSModule : MonoBehaviour
 
         var response = await openAIApi.CreateTextToSpeech(request);
 
-        if (response.AudioClip) audioSource.PlayOneShot(response.AudioClip);
+        if (response.AudioClip)
+        {
+            audioSource.clip = response.AudioClip;
+            audioSource.Play();
+        }
 
         onPlayingStart.Invoke();
 

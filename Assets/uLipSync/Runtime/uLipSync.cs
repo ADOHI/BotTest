@@ -13,7 +13,7 @@ public class uLipSync : MonoBehaviour
     public LipSyncUpdateEvent onLipSyncUpdate = new LipSyncUpdateEvent();
     [Range(0f, 1f)] public float outputSoundGain = 1f;
 
-    AudioSource _audioSource;
+    public AudioSource _audioSource;
     public uLipSyncAudioSource audioSourceProxy;
     uLipSyncAudioSource _currentAudioSourceProxy;
 
